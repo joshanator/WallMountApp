@@ -5,7 +5,9 @@
   "icons": {
     "128": "icon_128.png"
   },
-  "permissions": [],
+  "permissions": [
+	  "https://google.com/calendar/"
+  ],
   "app": {
     "background": {
       "scripts": ["background.js"]
