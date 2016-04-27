@@ -42,7 +42,6 @@
 		.card {
 			box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 5px 0 rgba(0,0,0,.23);
 			background: white;
-			float:left;
 			width:90%;
 			height:600px;
 			max-width: 800px;
@@ -50,6 +49,7 @@
 			padding-top:20px;
 			margin:50px;
 			overflow: hidden;
+			margin-left:auto; margin-right:auto;
 		}
 	
 	
@@ -60,11 +60,14 @@
 	<h1><span id="clock">00:00:00 AM</span></h1>
 	<h2><span id="date">Jan 0</span></h2>
 	<div calss="cards"> 
-		<div class="card" id="0"></div>
-		<div class="card cal" id="0">	
-			<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;&amp;src=banemalak%40gmail.com&amp;color=%23711616&amp;ctz=America%2FNew_York" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+		<div style="width:50%; float:left;">
+			<div class="card cal" id="0">	
+				<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;&amp;src=banemalak%40gmail.com&amp;color=%23711616&amp;ctz=America%2FNew_York" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+			</div>
 		</div>
-		<divc class="card"></div>
+		<div style="width:50%; float:left;">
+			<div class="card"></div>
+		</div>
 	</div>
 	
 	</br>
