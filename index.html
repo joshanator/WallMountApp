@@ -29,12 +29,7 @@
 			font-size:30px;
 			margin:5px;
 		}
-		.weather {
-			float:left;
-			width:200px;
-/*			max-width:35%;*/
-			height:100%;
-		}
+
 		.cards {
 			width: clac(900px * 3);
 			
@@ -53,23 +48,70 @@
 		}
 	
 	
+		/*WEATHER*/
+		.weather {
+		  text-align: center;
+		  width:100%;
+		  margin-left: auto;
+		  margin-right: auto;
+		  color:#555555;
+		}
+		.weather h1 {
+			color:#555555;
+			font-weight:100;
+			font-size:50px;
+		}
+		.weather h2 {
+			color:#555555;
+			font-weight:100;
+			font-size:50px;
+		}
+		.details {
+		  font-size: 100px;
+		  font-weight: 100;
+		}
+		.icon {
+		  margin-right: 1rem;
+		  margin-left: -2rem;
+		  vertical-align: middle;
+		}
+		.units {
+		  color: #1DA1F2;
+		  cursor: pointer;
+		}
+		.units:hover {
+		  text-decoration: underline;
+		}
+		
+		
+		
+		
+		
 	</style>
 	
 </head>
 <body onload="updateClock(); setInterval('updateClock()', 1000 )" style="background:url('image2.jpg'); background-size:cover; height:100%; width:100%;">
 	<h1><span id="clock">00:00:00 AM</span></h1>
 	<h2><span id="date">Jan 0</span></h2>
+	
+	
+	
+	
+	
+	
 	<div calss="cards"> 
-		<div style="width:50%; float:left;">
 			<div class="card cal" id="0">	
 				<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;&amp;src=banemalak%40gmail.com&amp;color=%23711616&amp;ctz=America%2FNew_York" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 			</div>
-		</div>
-		<div style="width:50%; float:left;">
-			<div class="card"></div>
-		</div>
+			<div class="card">
+				<section class="weather">
+				<h1 class="location"></h2>
+				<h2><i class='icon'></i><span class="forecast"></span></h2>
+				<p class="details"><span class='degrees'></span><span class='units' onclick='convert()'></span></p>
+				</section>
+			</div>
 	</div>
-	
+		
 	</br>
 	
 	
@@ -93,13 +135,20 @@
 	
 	<script type="text/javascript">
 		
-
+		var oldSec = 0;
+		var cardNum = 0;
 		function updateClock ( )
 		{
 		  var currentTime = new Date()
 
 		  var currentHours = currentTime.getHours ( );
 		  var currentMinutes = currentTime.getMinutes ( );
+		  if(currentSeconds >= oldSec + 30) {
+			  cardNum++;
+			  if(cardNum )
+			  oldSec = currentSeconds;
+		  }
+		  
 		  var currentSeconds = currentTime.getSeconds ( );
 		  var currentYear = currentTime.getFullYear();
 		  var currentMonth = currentTime.getMonth();
@@ -107,6 +156,7 @@
 		  var currentDate = currentTime.getDate();
 
 		  var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+		  var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 			
 		  // Pad the minutes and seconds with leading zeros, if required
@@ -125,7 +175,7 @@
 		  // Compose the string for display
 		  var currentTimeString = currentHours + ":" + currentMinutes + ":" + currentSeconds + " " + timeOfDay;
 			
-		  var currentDateString = currentDay + ", " + monthNames[currentMonth] + " " + currentDate + ", " + currentYear;
+		  var currentDateString = dayNames[currentDay] + ", " + monthNames[currentMonth] + " " + currentDate + ", " + currentYear;
 
 		  // Update the time display
 		  $("#clock").html(currentTimeString);
@@ -146,6 +196,58 @@
 				curr--;
 			
 		}
+		
+		
+		
+		
+		/*WEATHER*/
+		var locationNode = document.getElementsByClassName('location')[0];
+		var weatherNode = document.getElementsByClassName('forecast')[0];
+		var iconNode = document.getElementsByClassName('icon')[0];
+		var degreesNode = document.getElementsByClassName('degrees')[0];
+		var unitsNode = document.getElementsByClassName('units')[0];
+		var units = "";
+		var start = function() {
+		  var request = new XMLHttpRequest();
+		  request.addEventListener('load', parseLocation);
+		  request.open('GET', 'http://ipinfo.io/json');
+		  request.send(null);
+		}
+		var parseLocation = function() {
+		  var location = JSON.parse(this.responseText);
+		  locationNode.innerHTML = location.city + ", " + location.region;
+		  units = (location.country === 'US')? 'imperial': 'metric';
+		  getWeather(location.loc);
+		}
+		var getWeather = function(coordinates) {
+		  var coordinates = coordinates.split(',');
+		  var lat = coordinates[0];
+		  var long = coordinates[1];
+		  var request = new XMLHttpRequest();
+		  request.addEventListener('load', parseWeather);
+		  request.open('GET', 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + long + '9&units=' + units + '&appid=9b284dfbbea5a4251e3ba69116cce9af');
+		  request.send(null);
+		}
+		var parseWeather = function() {
+		  var weather = JSON.parse(this.responseText);
+		  weatherNode.innerHTML += weather.weather[0].main;
+		  iconNode.innerHTML = "<img src='http://openweathermap.org/img/w/" + weather.weather[0].icon + ".png' />";
+		  degreesNode.innerHTML = weather.main.temp;
+		  unitsNode.innerHTML += (units === 'imperial')? ' °F': ' °C'
+		}
+		var convert = function() {
+		  console.log(units);
+		  if (units === 'imperial') {
+			degreesNode.innerHTML = Math.round((Number(degreesNode.innerHTML) - 32) * (5/9) * 100) / 100;
+			units = "metric";
+			unitsNode.innerHTML = ' °C';
+		  } else {
+			degreesNode.innerHTML = Math.round((Number(degreesNode.innerHTML) * (9/5) + 32) * 100) / 100;
+			units = "imperial";
+			unitsNode.innerHTML = ' °F';
+		  }
+		}
+		start();
 	</script>
 </body>
 </html>
