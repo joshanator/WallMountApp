@@ -1,0 +1,18 @@
+.info{
+	position: absolute;
+	left: calc(50% - 150px);
+	top: calc(50% - 200px);
+	width: 300px;
+	height: 400px;
+	border: 2px black;
+	background: white;
+}
+
+
+#main{
+	z-index: 10;
+}
+
+#returning{
+	z-index:0;
+}
