@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+	
+	
+	
+	
+	<style>
+		html, body {
+			padding:0px;
+			margin:0px;
+			text-align: center;
+			font-family:Roboto;
+			
+		}
+		iframe body {
+			background: none;
+		}
+		h1 {
+			color:white;
+			font-weight:100;
+			font-size:60px;
+			margin-bottom: 5px;
+		}
+		h2 {
+			color:white;
+			font-weight:100;
+			font-size:30px;
+			margin:5px;
+		}
+		.weather {
+			float:left;
+			width:200px;
+/*			max-width:35%;*/
+			height:100%;
+		}
+		.cards {
+			width: clac(900px * 3);
+			
+		}
+		.card {
+			box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 5px 0 rgba(0,0,0,.23);
+			background: white;
+			width:90%;
+			height:600px;
+			max-width: 800px;
+			border-radius: 3px;
+			padding-top:20px;
+			margin:50px;
+			overflow: hidden;
+			margin-left:auto; margin-right:auto;
+		}
+	
+	
+	</style>
+	
+</head>
+<body onload="updateClock(); setInterval('updateClock()', 1000 )" style="background:url('image2.jpg'); background-size:cover; height:100%; width:100%;">
+	<h1><span id="clock">00:00:00 AM</span></h1>
+	<h2><span id="date">Jan 0</span></h2>
+	<div calss="cards"> 
+		<div style="width:50%; float:left;">
+			<div class="card cal" id="0">	
+				<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;src=tim.felbinger%40gmail.com&amp;color=%23000000&amp;ctz=America%2FNew_York" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe></iframe>
+			</div>
+		</div>
+		<div style="width:50%; float:left;">
+			<div class="card"></div>
+		</div>
+	</div>
+	
+	</br>
+	
+	
+	<a href="https://accounts.google.com/ServiceLogin">Login to Google</a>
+	
+	
+	
+	
+	
+	<script src="jquery-2.2.3.min.js"></script>
+	<script>
+//		$('iframe').load(function() {
+//			
+//			$('iframe').contents().find('body').css("background", white);
+//			
+//		});
+	
+	
+	
+	</script>
+	
+	<script type="text/javascript">
+		
+
+		function updateClock ( )
+		{
+		  var currentTime = new Date()
+
+		  var currentHours = currentTime.getHours ( );
+		  var currentMinutes = currentTime.getMinutes ( );
+		  var currentSeconds = currentTime.getSeconds ( );
+		  var currentYear = currentTime.getFullYear();
+		  var currentMonth = currentTime.getMonth();
+		  var currentDay = currentTime.getDay();
+		  var currentDate = currentTime.getDate();
+
+		  var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+
+			
+		  // Pad the minutes and seconds with leading zeros, if required
+		  currentMinutes = ( currentMinutes < 10 ? "0" : "" ) + currentMinutes;
+		  currentSeconds = ( currentSeconds < 10 ? "0" : "" ) + currentSeconds;
+
+		  // Choose either "AM" or "PM" as appropriate
+		  var timeOfDay = ( currentHours < 12 ) ? "AM" : "PM";
+
+		  // Convert the hours component to 12-hour format if needed
+		  currentHours = ( currentHours > 12 ) ? currentHours - 12 : currentHours;
+
+		  // Convert an hours component of "0" to "12"
+		  currentHours = ( currentHours == 0 ) ? 12 : currentHours;
+
+		  // Compose the string for display
+		  var currentTimeString = currentHours + ":" + currentMinutes + ":" + currentSeconds + " " + timeOfDay;
+			
+		  var currentDateString = currentDay + ", " + monthNames[currentMonth] + " " + currentDate + ", " + currentYear;
+
+		  // Update the time display
+		  $("#clock").html(currentTimeString);
+		  $("#date").html(currentDateString);
+		}	
+		
+		var curr = 0;
+		
+		
+		function cards(forward) {
+			$('.card#' + curr).css("margin-left", "100%");
+			if(forwards)
+				curr++;
+			else
+				curr--;
+			
+		}
+	</script>
+</body>
+</html>
