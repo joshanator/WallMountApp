@@ -5,7 +5,7 @@
     $db = mysqli_connect('localhost','WebApp','1000001870','WallMount');
 	
 	if ($db->connect_errno) {
-    printf("Connect failed: %s\n", $db->connect_error);
+    echo "Connect failed: %s\n" . $db->connect_error;
 	}
 
 	if(isset($_GET['id']))
@@ -14,9 +14,6 @@
 		
 		 $result = mysqli_query($db, 
      	"CALL dbo.VERIFY(" . $id . ")") or die("Query fail: " . mysqli_error());
-		
-
-
 		
 		echo $result;
 		
