@@ -9,9 +9,11 @@ body {
 	padding-top:100px;
 	padding-bottom:60px;
 	box-sizing: border-box;
+	overflow: hidden;
 }
 
 .toolbar {
+	z-index:1000000;
 	width:100%;
 	position:fixed;
 	box-sizing: border-box;
@@ -44,7 +46,7 @@ header h2 {
 	font-size:20px;
 	color:#9e9e9e;
 }
-header h2#active {
+header h2.open {
 	color:black;
 }
 
@@ -59,7 +61,7 @@ header h2 span {
 	font-size:20px;
 	margin-right:10px;
 }
-header h2#active span {
+header h2.open span {
 	background-color:#673AB7
 }
 
@@ -74,9 +76,17 @@ header .horizLine {
 }
 
 .step {
+	position: absolute;
+	top:100px;
+	left:100%;
 	width:100%;
 	height:100%;
 	background-color:#eeeeee;
+	transition: left .5s ease-out;
+}
+.step.open {
+	opacity: 1;
+	left:0px !important;
 }
 
 .layouts {
@@ -102,8 +112,8 @@ header .horizLine {
 .layout:hover {
 	box-shadow: 0 2px 20px 0 rgba(0,0,0,.16), 0 2px 20px 0 rgba(0,0,0,.23);
 }
-.layouts.active {
-	border: #673AB7 2px solid;
+.layout.selected {
+	background-color:#D1C4E9;
 }
 
 nav {
