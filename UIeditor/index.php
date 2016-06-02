@@ -2,7 +2,22 @@
 <script src="/jquery.js"></script>
 <script src="/script.js"></script>
 <?php
-    $db = mysqli_connect('localhost','WebApp','1000001870','WallMount');
+
+
+
+try {
+    $hostname = "localhost";           
+    $dbname = "WallMount";            
+    $username = "WebApp";            
+    $pw = "1000001870";                
+
+    $dbh = new PDO ("mssql:host=$hostname;dbname=$dbname","$username","$pw");
+    } catch (PDOException $e) {
+    echo "Failed to get DB handle: " . $e->getMessage() . "\n";
+    exit;
+    }
+
+    /* $db = mysqli_connect('localhost','WebApp','1000001870','WallMount');
 	
 	if ($db->connect_errno) {
     echo "Connect failed: %s\n" . $db->connect_error;
@@ -30,7 +45,7 @@
 	{
 		echo '<style> #main{z-index:10;}</style>';
 	}
-	mysqli_close($db);
+	mysqli_close($db); */
 ?>
 
 <html>
