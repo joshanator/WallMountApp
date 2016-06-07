@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+	
+	
+	
+	
+	<style>
+		html, body {
+			padding:0px;
+			margin:0px;
+			text-align: center;
+			font-family:Roboto;
+			
+		}
+		iframe body {
+			background: none;
+		}
+		h1 {
+			color:white;
+			font-weight:100;
+			font-size:60px;
+			margin-bottom: 5px;
+		}
+		h2 {
+			color:white;
+			font-weight:100;
+			font-size:30px;
+			margin:5px;
+		}
+
+		
+		.card {
+			box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 5px 0 rgba(0,0,0,.23);
+			background: white;
+            position: absolute;
+
+			border-radius: 3px;
+			padding-top:20px;
+			
+			overflow: hidden;
+			
+		}
+	
+	
+		/*WEATHER*/
+		.weather {
+		  text-align: center;
+		  width:100%;
+		  margin-left: auto;
+		  margin-right: auto;
+		  color:#555555;
+		}
+		.weather h1 {
+			color:#555555;
+			font-weight:100;
+			font-size:50px;
+		}
+		.weather h2 {
+			color:#555555;
+			font-weight:100;
+			font-size:50px;
+		}
+		.details {
+		  font-size: 100px;
+		  font-weight: 100;
+		}
+		.icon {
+		  margin-right: 1rem;
+		  margin-left: -2rem;
+		  vertical-align: middle;
+		}
+		.units {
+		  color: #1DA1F2;
+		  cursor: pointer;
+		}
+		.units:hover {
+		  text-decoration: underline;
+		}
+		
+		
+		
+		
+		
+	</style>
+	
+</head>
+<body onload="updateClock(); setInterval('updateClock()', 1000 )" style="background:url('image2.jpg'); background-size:cover; height:100%; width:100%;">
+	<h1><span id="clock">00:00:00 AM</span></h1>
+	<h2><span id="date">Jan 0</span></h2>
+	
+	
+	
+	
+	
+	
+	<div class="cards"> 
+			<div class="card" id="0" style="border-width:0; position: absolute; left:2.5%; top:25%; width:45%; height:70%; frameborder:0; scrolling:no;">	
+				<iframe src="" ></iframe>
+			</div>
+        
+        <div class="card" id="1" style="border-width:0; position: absolute; left:52.5%; top:25%; width:45%; height:70%; frameborder:0; scrolling:no;">	
+				<iframe src="" ></iframe>
+			</div>
+        
+        
+    </div>
+	
+		
+	</br>
+
+    
+   
+
+<script src="jquery-2.2.3.min.js"></script>
+	<script>
+//		$('iframe').load(function() {
+//			
+//			$('iframe').contents().find('body').css("background", white);
+//			
+//		});
+	
+	
+	
+	</script>
+	
+	<script type="text/javascript">
+		
+		var oldSec = 0;
+		var cardNum = 0;
+		function updateClock ( )
+		{
+		  var currentTime = new Date()
+
+		  var currentHours = currentTime.getHours ( );
+		  var currentMinutes = currentTime.getMinutes ( );
+		  if(currentSeconds >= oldSec + 30) {
+			  cardNum++;
+			  if(cardNum )
+			  oldSec = currentSeconds;
+		  }
+		  
+		  var currentSeconds = currentTime.getSeconds ( );
+		  var currentYear = currentTime.getFullYear();
+		  var currentMonth = currentTime.getMonth();
+		  var currentDay = currentTime.getDay();
+		  var currentDate = currentTime.getDate();
+
+		  var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+		  var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+			
+		  // Pad the minutes and seconds with leading zeros, if required
+		  currentMinutes = ( currentMinutes < 10 ? "0" : "" ) + currentMinutes;
+		  currentSeconds = ( currentSeconds < 10 ? "0" : "" ) + currentSeconds;
+
+		  // Choose either "AM" or "PM" as appropriate
+		  var timeOfDay = ( currentHours < 12 ) ? "AM" : "PM";
+
+		  // Convert the hours component to 12-hour format if needed
+		  currentHours = ( currentHours > 12 ) ? currentHours - 12 : currentHours;
+
+		  // Convert an hours component of "0" to "12"
+		  currentHours = ( currentHours == 0 ) ? 12 : currentHours;
+
+		  // Compose the string for display
+		  var currentTimeString = currentHours + ":" + currentMinutes + ":" + currentSeconds + " " + timeOfDay;
+			
+		  var currentDateString = dayNames[currentDay] + ", " + monthNames[currentMonth] + " " + currentDate + ", " + currentYear;
+
+		  // Update the time display
+		  $("#clock").html(currentTimeString);
+		  $("#date").html(currentDateString);
+		}
+		
+		
+	
+		
+		
+		
+		
+		
+	</script>
+
+
+
+    
+</body>
+</html>
