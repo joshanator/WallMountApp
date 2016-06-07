@@ -139,3 +139,16 @@ nav > div {
 nav > div:hover {
 	background-color:rgba(255, 255, 255, .2);
 }
+
+select {
+	margin-left:auto;
+	margin-right: auto;
+	width:500px;
+	font-size: 30px;
+	
+}
+
+.card {
+	background-color:white;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 5px 0 rgba(0,0,0,.23);
+}
